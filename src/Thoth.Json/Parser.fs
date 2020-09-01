@@ -49,7 +49,8 @@ type Json =
         let newLine =
             if saveOptions = JsonSaveOptions.Format then
                 fun indentation plus ->
-                    builder.AppendLine("") |> ignore
+                    // Don't use the default System newline because it breaks the Unit Tests...
+                    builder.Write("\n")
                     System.String(' ', indentation + plus)
                     |> builder.Write
                     |> ignore

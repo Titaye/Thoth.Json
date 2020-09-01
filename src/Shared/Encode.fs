@@ -735,6 +735,8 @@ module Encode =
 
         value.Write(builder, format, space)
 
+//        let bytes = Encoding.Default.GetBytes(builder.ToString())
+//        Encoding.ASCII.GetString(bytes)
         builder.ToString()
         #endif
 
