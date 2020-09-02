@@ -2,7 +2,7 @@
 namespace Thoth.Json
 
 open Thoth.Json.Parser
-
+open System.Globalization
 #endif
 
 #if THOTH_JSON_FABLE
@@ -186,7 +186,7 @@ module Decode =
                 Helpers.asFloat value |> decimal |> Ok
             elif Helpers.isString value then
                 // Accept any culture for now
-                #if THOTH_JSON_NEWTONSOFT
+                #if THOTH_JSON_NEWTONSOFT || THOTH_JSON && !FABLE_COMPILER
                 match System.Decimal.TryParse(Helpers.asString value, NumberStyles.Any, CultureInfo.InvariantCulture) with
                 #else
                 match System.Decimal.TryParse(Helpers.asString value) with
@@ -1306,7 +1306,7 @@ module Decode =
                         (name :string)
                         (values : JsonValue []) =
         let unionCaseInfo =
-            #if THOTH_JSON_NEWTONSOFT && !NETFRAMEWORK
+            #if THOTH_JSON_NEWTONSOFT && !NETFRAMEWORK || THOTH_JSON && !FABLE_COMPILER
             match t with
             | Util.StringEnum attributeType ->
                 unionCasesInfo

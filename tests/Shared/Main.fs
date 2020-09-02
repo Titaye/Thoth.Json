@@ -26,21 +26,18 @@ let quicktests =
     testList "QuickTest" [
         testList "Fake category" [
             testCase "QuickTest: #1" <| fun _ ->
-                let expected =
-                    {
-                        FeedName = "Ars"
-                        Content = "<div><figure class=\"intro-image intro-left\"><img src=\"https://cdn.arstechnica.net/wp-content/uploads/2019/05/qualcomm-enforcer-800x450.jpg\"></figure><div>"
-                    }
+                let jsonRecord =
+                    """{ "a": 1.0,"b": 2.0,
+                         "c": 3.0,
+                         "d": 4.0,
+                         "e": 5.0,
+                         "f": 6.0,
+                         "g": 7.0,
+                         "h": 8.0 }"""
 
-                let articleJson =
-                    """
-                {
-                  "FeedName": "Ars",
-                  "Content": "<div><figure class=\"intro-image intro-left\"><img src=\"https://cdn.arstechnica.net/wp-content/uploads/2019/05/qualcomm-enforcer-800x450.jpg\"></figure><div>"
-                }
-                    """
-                let actual : TestStringWithHTML = Decode.Auto.unsafeFromString(articleJson)
-                Expect.equal actual expected ""
+
+                let actual = Decode.unsafeFromString(Decode.field "b" Decode.float) jsonRecord
+                Expect.equal actual 2.0 ""
                 ()
         ]
     ]
@@ -55,7 +52,7 @@ let main args =
             Encoders.Auto.tests
 //            // Uncomment this line if you want to use the quicktests useful
 //            // when prototyping or trying to reproduce an issue
-//            quicktests
+            quicktests
         ]
 
     #if FABLE_COMPILER

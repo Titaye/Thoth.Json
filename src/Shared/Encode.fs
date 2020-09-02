@@ -161,7 +161,7 @@ module Encode =
     ///
     let decimal (value : decimal) : JsonValue =
         #if THOTH_JSON
-        value.ToString() |> Json.String
+        value.ToString(CultureInfo.InvariantCulture) |> Json.String
         #endif
 
         #if THOTH_JSON_FABLE
@@ -333,7 +333,7 @@ module Encode =
 
     let bigint (value : bigint) : JsonValue =
         #if THOTH_JSON
-        value.ToString() |> Json.String
+        value.ToString(CultureInfo.InvariantCulture) |> Json.String
         #endif
 
         #if THOTH_JSON_FABLE
